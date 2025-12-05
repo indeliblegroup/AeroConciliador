@@ -1,186 +1,137 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
-  ArrowRight, 
-  User,
-  FileText,
-  Search,
-  MessageSquare,
+  FileText, 
+  Upload, 
+  MessageSquare, 
   CheckCircle2,
   Clock,
   Shield,
-  Eye,
-  Plane,
-  Luggage,
-  CalendarX,
+  Heart,
+  Zap,
   AlertCircle
 } from 'lucide-react';
 
 export default function Passageiros() {
   const steps = [
     {
-      number: '01',
       icon: FileText,
       title: 'Registre seu Caso',
-      description: 'Preencha um formulário simples com os dados do seu voo e o problema que enfrentou.'
+      description: 'Preencha um formulário simples com os detalhes do seu voo e o problema enfrentado.'
     },
     {
-      number: '02',
-      icon: Search,
-      title: 'Verificação de Documentos',
-      description: 'Nossa equipe analisa as informações e documentos para validar seu caso.'
+      icon: Upload,
+      title: 'Envie Documentos',
+      description: 'Faça upload do seu bilhete, comprovantes e qualquer documentação relevante.'
     },
     {
-      number: '03',
       icon: MessageSquare,
-      title: 'Receba Proposta de Acordo',
-      description: 'A companhia aérea apresenta uma proposta de acordo para resolver a situação.'
+      title: 'Receba Proposta',
+      description: 'Nossa equipe analisa seu caso e a companhia apresenta uma proposta de acordo em poucos dias.'
     },
     {
-      number: '04',
       icon: CheckCircle2,
-      title: 'Conclusão da Conciliação',
-      description: 'Caso aceite, o acordo é formalizado e você recebe sua compensação.'
+      title: 'Conclua o Acordo',
+      description: 'Se aceitar a proposta, o acordo é formalizado com validade jurídica e você recebe sua compensação.'
     }
   ];
 
-  const problemTypes = [
-    { icon: Clock, title: 'Atraso de Voo', description: 'Voos que atrasaram mais de 4 horas' },
-    { icon: CalendarX, title: 'Cancelamento', description: 'Voos cancelados sem aviso prévio' },
-    { icon: Luggage, title: 'Extravio de Bagagem', description: 'Malas perdidas ou danificadas' },
-    { icon: AlertCircle, title: 'Overbooking', description: 'Impedimento de embarque por excesso' }
+  const benefits = [
+    {
+      icon: Clock,
+      title: 'Resolução Rápida',
+      description: 'Média de 4 dias para resolver, sem esperar anos na justiça'
+    },
+    {
+      icon: Shield,
+      title: 'Sem Custos',
+      description: 'Não há taxas ou custos para o passageiro utilizar a plataforma'
+    },
+    {
+      icon: Heart,
+      title: 'Atendimento Humanizado',
+      description: 'Conciliadores certificados que entendem sua situação'
+    },
+    {
+      icon: Zap,
+      title: 'Processo Digital',
+      description: 'Tudo online, sem precisar sair de casa'
+    }
   ];
 
-  const benefits = [
-    { icon: Clock, text: 'Resolução rápida, em dias e não anos' },
-    { icon: Shield, text: 'Acordo formal com validade jurídica' },
-    { icon: Eye, text: 'Acompanhamento em tempo real do seu caso' },
-    { icon: CheckCircle2, text: 'Sem custos advocatícios' }
+  const eligibleCases = [
+    'Atraso de voo superior a 4 horas',
+    'Cancelamento de voo',
+    'Overbooking (preterição de embarque)',
+    'Extravio, dano ou atraso de bagagem',
+    'Problemas com reembolso',
+    'Downgrade (mudança de classe)'
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-20">
-      {/* Hero */}
-      <section className="py-24 bg-gradient-to-br from-[#10B981] via-[#059669] to-[#047857] relative overflow-hidden">
+    <div className="min-h-screen pt-20">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-[#0F2B46] via-[#1E3A5F] to-[#0F2B46] py-24 relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#047857]/50 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#1E5A8A]/20 rounded-full blur-3xl" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 mb-8">
-                <User className="w-4 h-4 text-white" />
-                <span className="text-white text-sm font-medium">Para Passageiros</span>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Teve problema com
-                <br />
-                seu voo?
+              <span className="inline-block px-4 py-2 bg-[#10B981]/20 text-[#10B981] rounded-full text-sm font-semibold mb-6">
+                Para Passageiros
+              </span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Resolva seu Problema com Voo de Forma Rápida
               </h1>
-
-              <p className="text-xl text-white/90 leading-relaxed mb-8 max-w-2xl">
-                Resolva de forma rápida, transparente e sem processo judicial. 
-                Nossa Sala de Conciliação conecta você diretamente à companhia aérea.
+              <p className="text-xl text-white/70 mb-8 leading-relaxed">
+                Evite a burocracia e o tempo de um processo judicial. Nossa Sala de Conciliação 
+                conecta você diretamente com a companhia aérea para um acordo justo e ágil.
               </p>
-
-              <Link to={createPageUrl('Contato')}>
-                <Button size="lg" className="bg-white text-[#059669] hover:bg-white/90 px-8 py-6 text-lg rounded-xl group">
-                  Iniciar Conciliação
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
+              <Button size="lg" className="bg-[#10B981] hover:bg-[#059669] text-white px-10 py-6 text-lg rounded-xl">
+                Iniciar Conciliação
+              </Button>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Problem Types */}
+      {/* How It Works */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Tipos de Problema</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mt-4 mb-6">
-              O que podemos ajudar a resolver
-            </h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {problemTypes.map((problem, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-[#FAFBFC] rounded-2xl p-8 text-center hover:shadow-lg transition-shadow group cursor-pointer"
-              >
-                <div className="w-16 h-16 bg-[#10B981]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-[#10B981] transition-colors">
-                  <problem.icon className="w-8 h-8 text-[#10B981] group-hover:text-white transition-colors" />
-                </div>
-                <h3 className="text-xl font-bold text-[#0F2B46] mb-2">{problem.title}</h3>
-                <p className="text-[#64748B]">{problem.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it Works */}
-      <section className="py-24 bg-[#FAFBFC]">
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Passo a Passo</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mt-4 mb-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
               Como Funciona para Você
             </h2>
             <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
-              Um processo simples e transparente, sem burocracia
+              Um processo simples e transparente do início ao fim
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-                className="relative"
+                transition={{ delay: index * 0.1 }}
+                className="text-center relative"
               >
-                {/* Connector Line */}
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-[#10B981] to-[#10B981]/30" />
-                )}
-
-                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative z-10">
-                  <div className="w-14 h-14 bg-[#10B981] rounded-xl flex items-center justify-center mb-6">
-                    <step.icon className="w-7 h-7 text-white" />
-                  </div>
-                  <span className="text-[#10B981] font-bold text-sm">{step.number}</span>
-                  <h3 className="text-xl font-bold text-[#0F2B46] mt-2 mb-3">{step.title}</h3>
-                  <p className="text-[#64748B] leading-relaxed">{step.description}</p>
+                <div className="w-20 h-20 bg-gradient-to-br from-[#10B981] to-[#059669] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <step.icon className="w-10 h-10 text-white" />
                 </div>
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-10 left-[60%] w-full h-0.5 bg-[#10B981]/30" />
+                )}
+                <h3 className="font-bold text-[#0F2B46] text-lg mb-3">{step.title}</h3>
+                <p className="text-[#64748B] text-sm">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -188,137 +139,100 @@ export default function Passageiros() {
       </section>
 
       {/* Benefits */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-[#FAFBFC]">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Vantagens</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mt-4 mb-6">
-                Por que escolher a conciliação?
-              </h2>
-              <p className="text-[#64748B] text-lg mb-8">
-                A conciliação é uma forma rápida, segura e eficiente de resolver seu problema, 
-                sem precisar entrar com processo judicial.
-              </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+              Vantagens da Conciliação
+            </h2>
+            <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
+              Por que escolher nosso serviço em vez de entrar com um processo judicial
+            </p>
+          </div>
 
-              <div className="space-y-4">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-4 p-4 bg-[#FAFBFC] rounded-xl"
-                  >
-                    <div className="w-12 h-12 bg-[#10B981]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <benefit.icon className="w-6 h-6 text-[#10B981]" />
-                    </div>
-                    <span className="text-[#0F2B46] font-medium">{benefit.text}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              {/* Illustration Card */}
-              <div className="bg-gradient-to-br from-[#10B981] to-[#059669] rounded-3xl p-8 lg:p-12 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                
-                <div className="relative z-10">
-                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-8">
-                    <Plane className="w-10 h-10 text-[#10B981]" style={{ transform: 'rotate(-45deg)' }} />
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-white mb-4">
-                    Mais de 5.000 casos
-                    <br />resolvidos
-                  </h3>
-
-                  <p className="text-white/80 mb-8">
-                    Passageiros que confiaram na conciliação e resolveram 
-                    seus problemas de forma rápida e eficiente.
-                  </p>
-
-                  <div className="flex items-center gap-4">
-                    <div className="flex -space-x-3">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-10 h-10 bg-white/30 rounded-full border-2 border-white" />
-                      ))}
-                    </div>
-                    <span className="text-white font-medium">+2.500 este ano</span>
-                  </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {benefits.map((benefit, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border border-gray-100"
+              >
+                <div className="w-14 h-14 bg-[#10B981]/10 rounded-xl flex items-center justify-center mb-6">
+                  <benefit.icon className="w-7 h-7 text-[#10B981]" />
                 </div>
-              </div>
-            </motion.div>
+                <h3 className="font-bold text-[#0F2B46] mb-3">{benefit.title}</h3>
+                <p className="text-[#64748B] text-sm">{benefit.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Important Note */}
-      <section className="py-16 bg-[#FAFBFC]">
+      {/* Eligible Cases */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 border border-gray-100 max-w-3xl mx-auto"
-          >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-[#1E5A8A]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Shield className="w-6 h-6 text-[#1E5A8A]" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#0F2B46] mb-2">Importante saber</h3>
-                <p className="text-[#64748B] leading-relaxed">
-                  Somos uma plataforma de conciliação, não um escritório de advocacia. 
-                  Nosso papel é facilitar o diálogo entre você e a companhia aérea para 
-                  chegar a um acordo justo. Você sempre terá a liberdade de aceitar ou 
-                  recusar qualquer proposta.
-                </p>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+                Casos que Atendemos
+              </h2>
+              <p className="text-[#64748B] text-lg">
+                Situações comuns que podem ser resolvidas por nossa Sala de Conciliação
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {eligibleCases.map((caseType, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center gap-4 p-4 bg-[#FAFBFC] rounded-xl border border-gray-100"
+                >
+                  <div className="w-10 h-10 bg-[#10B981]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="w-5 h-5 text-[#10B981]" />
+                  </div>
+                  <span className="text-[#0F2B46] font-medium">{caseType}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-12 p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+              <div className="flex items-start gap-4">
+                <AlertCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-[#0F2B46] mb-2">Importante</h3>
+                  <p className="text-[#64748B] text-sm">
+                    Não somos um escritório de advocacia. Somos uma plataforma de conciliação que 
+                    facilita o diálogo entre passageiros e companhias aéreas. Se não houver acordo, 
+                    você continua com o direito de buscar a justiça comum.
+                  </p>
+                </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gradient-to-br from-[#0F2B46] to-[#1E3A5F]">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-[#10B981] via-[#059669] to-[#047857] rounded-3xl p-12 lg:p-16 text-center relative overflow-hidden"
-          >
-            <div className="absolute inset-0">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
-            </div>
-
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Pronto para resolver seu problema?
-              </h2>
-              <p className="text-white/90 text-lg mb-8">
-                Inicie sua conciliação agora e resolva seu caso em poucos dias, 
-                sem burocracia e sem custos.
-              </p>
-              <Link to={createPageUrl('Contato')}>
-                <Button size="lg" className="bg-white text-[#059669] hover:bg-white/90 px-8 py-6 text-lg rounded-xl group">
-                  Iniciar Minha Conciliação
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Pronto para Resolver seu Problema?
+            </h2>
+            <p className="text-xl text-white/70 mb-8">
+              Registre seu caso agora e receba uma resposta em poucos dias
+            </p>
+            <Button size="lg" className="bg-[#10B981] hover:bg-[#059669] text-white px-10 py-6 text-lg rounded-xl">
+              Registrar Meu Caso
+            </Button>
+          </div>
         </div>
       </section>
     </div>

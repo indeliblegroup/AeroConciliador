@@ -1,180 +1,175 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { 
-  ArrowRight,
-  FileText,
-  Brain,
-  Sliders,
-  MessageSquare,
+  FileText, 
+  Brain, 
+  Sliders, 
+  MessageSquare, 
   CheckCircle2,
-  Building2,
-  User,
-  Zap,
-  Shield,
-  Clock
+  ArrowRight,
+  Database,
+  Settings,
+  Users,
+  FileCheck
 } from 'lucide-react';
 
 export default function ComoFunciona() {
-  const steps = [
+  const mainSteps = [
     {
-      number: '01',
       icon: FileText,
+      number: '01',
       title: 'Captura e Classificação do Caso',
-      description: 'O caso é registrado através de múltiplos canais (site, Consumidor.gov, SAC) e automaticamente classificado por tipo de ocorrência, urgência e valor estimado.',
+      description: 'O caso chega através do Consumidor.gov, canais de SAC, ouvidoria ou registro direto. Nossa IA classifica automaticamente por tipo de ocorrência (atraso, cancelamento, bagagem), urgência e valor estimado.',
       details: [
-        'Integração automática com Consumidor.gov.br',
-        'Classificação por tipo: atraso, cancelamento, bagagem, overbooking',
-        'Priorização inteligente por urgência e complexidade',
-        'Extração automática de dados do bilhete'
-      ],
-      color: '#1E5A8A'
+        'Integração com múltiplos canais de entrada',
+        'Classificação automática por machine learning',
+        'Atribuição de prioridade baseada em criticidade',
+        'Notificação imediata à companhia aérea'
+      ]
     },
     {
-      number: '02',
       icon: Brain,
+      number: '02',
       title: 'Análise Automática por IA',
-      description: 'Nosso motor de inteligência artificial analisa o caso com base em jurisprudência, histórico de acordos e parâmetros da companhia aérea.',
+      description: 'Nosso motor de inteligência artificial analisa o caso comparando com milhares de casos similares, jurisprudência recente e normas regulatórias para sugerir a faixa de acordo ideal.',
       details: [
-        'Análise de milhares de decisões judiciais',
-        'Comparação com casos similares resolvidos',
-        'Cálculo da probabilidade de acordo',
-        'Sugestão de faixa de valor ótima'
-      ],
-      color: '#10B981'
+        'Análise de jurisprudência em tempo real',
+        'Comparação com base de 50.000+ casos',
+        'Cálculo de probabilidade de acordo',
+        'Sugestão de valor justo baseada em dados'
+      ]
     },
     {
-      number: '03',
       icon: Sliders,
-      title: 'Parametrização pela Companhia',
-      description: 'A companhia aérea define suas regras de negócio, limites de valor e condições específicas para cada tipo de ocorrência.',
+      number: '03',
+      title: 'Parametrização da Companhia Aérea',
+      description: 'A companhia define suas regras de negócio: limites de acordo por categoria, fluxos de aprovação, exceções e políticas específicas. O sistema respeita os parâmetros configurados.',
       details: [
-        'Configuração de faixas de acordo por categoria',
-        'Definição de regras de exceção',
-        'Alçadas de aprovação automatizadas',
-        'Políticas de compensação personalizadas'
-      ],
-      color: '#1E5A8A'
+        'Políticas customizadas por tipo de caso',
+        'Limites de alçada por nível hierárquico',
+        'Regras de aprovação automática',
+        'Exceções e casos especiais'
+      ]
     },
     {
-      number: '04',
       icon: MessageSquare,
+      number: '04',
       title: 'Negociação Assistida',
-      description: 'Conciliadores certificados conduzem a negociação entre passageiro e companhia, com suporte da plataforma tecnológica.',
+      description: 'Conciliadores certificados conduzem a negociação entre passageiro e companhia, com suporte da plataforma. Todo o processo é documentado e auditável, garantindo compliance total.',
       details: [
-        'Conciliadores certificados pelo CNJ',
-        'Comunicação centralizada e rastreável',
-        'Sugestões de acordo em tempo real',
-        'Mediação imparcial e profissional'
-      ],
-      color: '#10B981'
+        'Mediadores certificados pela Lei 13.140/2015',
+        'Comunicação estruturada e profissional',
+        'Histórico completo de interações',
+        'Prazos definidos para cada etapa'
+      ]
     },
     {
-      number: '05',
       icon: CheckCircle2,
-      title: 'Registro e Fechamento do Acordo',
-      description: 'Uma vez aceito, o acordo é formalizado com validade jurídica, registrado e integrado aos sistemas da companhia.',
+      number: '05',
+      title: 'Acordo e Registro Formal',
+      description: 'Quando as partes chegam a um acordo, o termo é gerado automaticamente com validade jurídica. Registro formal em sistema, integração com financeiro para pagamento e encerramento do caso.',
       details: [
-        'Termo de acordo digital com assinatura eletrônica',
-        'Validade jurídica conforme Lei 13.140/2015',
-        'Integração com sistemas ERP e jurídico',
-        'Relatórios de acompanhamento'
-      ],
-      color: '#1E5A8A'
+        'Termo de acordo com validade legal',
+        'Assinatura eletrônica das partes',
+        'Integração com sistemas de pagamento',
+        'Arquivamento e auditoria permanente'
+      ]
+    }
+  ];
+
+  const integrations = [
+    {
+      icon: Database,
+      title: 'Consumidor.gov',
+      description: 'Sincronização automática de reclamações'
+    },
+    {
+      icon: FileCheck,
+      title: 'CEJUSC',
+      description: 'Integração com centros de conciliação'
+    },
+    {
+      icon: Users,
+      title: 'SAC / Ouvidoria',
+      description: 'Conexão com canais internos'
+    },
+    {
+      icon: Settings,
+      title: 'APIs Customizadas',
+      description: 'Integração com sistemas legados'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-20">
-      {/* Hero */}
-      <section className="py-24 bg-gradient-to-br from-[#0F2B46] via-[#1E3A5F] to-[#0F2B46] relative overflow-hidden">
+    <div className="min-h-screen pt-20">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-[#0F2B46] via-[#1E3A5F] to-[#0F2B46] py-24 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#1E5A8A]/20 rounded-full blur-3xl" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Processo</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mt-4 mb-6">
-              Como Funciona a
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#34D399]">
-                Sala de Conciliação
-              </span>
-            </h1>
-            <p className="text-xl text-white/70 leading-relaxed">
-              Um fluxo estruturado em 5 etapas que garante eficiência, 
-              transparência e segurança jurídica em cada acordo.
-            </p>
-          </motion.div>
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Como Funciona a Sala de Conciliação
+              </h1>
+              <p className="text-xl text-white/70 leading-relaxed">
+                Um fluxo estruturado em 5 etapas que garante eficiência, transparência 
+                e segurança jurídica do início ao fim
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Steps */}
+      {/* Main Process */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="space-y-24">
-            {steps.map((step, index) => (
+          <div className="max-w-5xl mx-auto">
+            {mainSteps.map((step, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className={`grid lg:grid-cols-2 gap-16 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
+                transition={{ delay: index * 0.2 }}
+                className="mb-16 last:mb-0"
               >
-                <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div 
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                      style={{ backgroundColor: step.color }}
-                    >
-                      <step.icon className="w-8 h-8 text-white" />
+                <div className="flex flex-col lg:flex-row gap-8">
+                  {/* Icon & Number */}
+                  <div className="flex-shrink-0">
+                    <div className="relative">
+                      <div className="w-20 h-20 bg-gradient-to-br from-[#10B981] to-[#059669] rounded-2xl flex items-center justify-center">
+                        <step.icon className="w-10 h-10 text-white" />
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-[#0F2B46] rounded-lg flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">{step.number}</span>
+                      </div>
                     </div>
-                    <span 
-                      className="text-5xl font-bold"
-                      style={{ color: step.color, opacity: 0.2 }}
-                    >
-                      {step.number}
-                    </span>
+                    {index < mainSteps.length - 1 && (
+                      <div className="hidden lg:block w-0.5 h-32 bg-gradient-to-b from-[#10B981] to-transparent ml-10 mt-4" />
+                    )}
                   </div>
 
-                  <h2 className="text-3xl font-bold text-[#0F2B46] mb-4">{step.title}</h2>
-                  <p className="text-[#64748B] text-lg mb-8">{step.description}</p>
+                  {/* Content */}
+                  <div className="flex-grow">
+                    <h3 className="text-2xl font-bold text-[#0F2B46] mb-4">{step.title}</h3>
+                    <p className="text-[#64748B] text-lg mb-6 leading-relaxed">
+                      {step.description}
+                    </p>
 
-                  <ul className="space-y-3">
-                    {step.details.map((detail, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-[#10B981] mt-0.5 flex-shrink-0" />
-                        <span className="text-[#64748B]">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <div 
-                    className="rounded-3xl p-8 lg:p-12"
-                    style={{ backgroundColor: `${step.color}10` }}
-                  >
-                    <div className="aspect-video bg-white rounded-2xl shadow-lg flex items-center justify-center relative overflow-hidden">
-                      {/* Illustration placeholder */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100" />
-                      <div 
-                        className="w-24 h-24 rounded-2xl flex items-center justify-center relative z-10"
-                        style={{ backgroundColor: step.color }}
-                      >
-                        <step.icon className="w-12 h-12 text-white" />
-                      </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {step.details.map((detail, idx) => (
+                        <div key={idx} className="flex items-start gap-3 p-4 bg-[#FAFBFC] rounded-xl border border-gray-100">
+                          <CheckCircle2 className="w-5 h-5 text-[#10B981] flex-shrink-0 mt-0.5" />
+                          <span className="text-sm text-[#64748B]">{detail}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -184,109 +179,81 @@ export default function ComoFunciona() {
         </div>
       </section>
 
-      {/* Timeline Summary */}
+      {/* Integrations */}
       <section className="py-24 bg-[#FAFBFC]">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Tempo Médio</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mt-4 mb-6">
-              Do Registro ao Acordo em Dias
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+              Integrações Nativas
             </h2>
-          </motion.div>
+            <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
+              Conectamos com os principais canais e sistemas do setor aéreo
+            </p>
+          </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-4">
-              {[
-                { label: 'Registro', time: '< 5 min' },
-                { label: 'Análise IA', time: '< 1h' },
-                { label: 'Parametrização', time: 'Pré-configurado' },
-                { label: 'Negociação', time: '1-3 dias' },
-                { label: 'Acordo', time: '< 1h' }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center min-w-[150px]"
-                >
-                  <div className="w-10 h-10 bg-[#10B981]/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                    <Clock className="w-5 h-5 text-[#10B981]" />
-                  </div>
-                  <p className="text-sm text-[#64748B] mb-1">{item.label}</p>
-                  <p className="text-lg font-bold text-[#0F2B46]">{item.time}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-12 text-center"
-            >
-              <div className="inline-flex items-center gap-3 px-6 py-4 bg-[#10B981]/10 rounded-2xl">
-                <Zap className="w-6 h-6 text-[#10B981]" />
-                <span className="text-lg font-semibold text-[#0F2B46]">
-                  Tempo total médio: 4.2 dias
-                </span>
-              </div>
-            </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {integrations.map((integration, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg transition-all border border-gray-100"
+              >
+                <div className="w-16 h-16 bg-[#0F2B46] rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <integration.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="font-bold text-[#0F2B46] mb-2">{integration.title}</h3>
+                <p className="text-sm text-[#64748B]">{integration.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Dual CTA */}
+      {/* Timeline */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Link to={createPageUrl('CompanhiasAereas')} className="block h-full">
-                <div className="bg-gradient-to-br from-[#0F2B46] to-[#1E3A5F] rounded-3xl p-8 h-full hover:shadow-xl transition-shadow">
-                  <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                    <Building2 className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Para Companhias Aéreas</h3>
-                  <p className="text-white/70 mb-6">
-                    Descubra como nossa plataforma pode reduzir seus custos e melhorar a experiência do cliente.
-                  </p>
-                  <div className="flex items-center text-[#10B981] font-medium">
-                    Saiba mais <ArrowRight className="ml-2 w-5 h-5" />
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+                Linha do Tempo Típica
+              </h2>
+              <p className="text-[#64748B] text-lg">
+                Do registro ao acordo fechado em média 4 dias úteis
+              </p>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Link to={createPageUrl('Passageiros')} className="block h-full">
-                <div className="bg-gradient-to-br from-[#10B981] to-[#059669] rounded-3xl p-8 h-full hover:shadow-xl transition-shadow">
-                  <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center mb-6">
-                    <User className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Para Passageiros</h3>
-                  <p className="text-white/90 mb-6">
-                    Teve problema com seu voo? Inicie sua conciliação agora e resolva em poucos dias.
-                  </p>
-                  <div className="flex items-center text-white font-medium">
-                    Iniciar conciliação <ArrowRight className="ml-2 w-5 h-5" />
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+            <div className="relative">
+              <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#10B981]/30 -translate-x-1/2 hidden md:block" />
+
+              <div className="space-y-8">
+                {[
+                  { day: 'Dia 0', title: 'Caso Registrado', desc: 'Passageiro registra o problema' },
+                  { day: 'Dia 1', title: 'Análise e Classificação', desc: 'IA processa e sugere acordo' },
+                  { day: 'Dia 2', title: 'Proposta Enviada', desc: 'Companhia apresenta oferta' },
+                  { day: 'Dia 3', title: 'Negociação', desc: 'Ajustes e contrapropostas' },
+                  { day: 'Dia 4', title: 'Acordo Fechado', desc: 'Termo assinado e finalizado' }
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className={`flex items-center gap-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                  >
+                    <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                      <span className="text-[#10B981] font-semibold text-sm">{item.day}</span>
+                      <h3 className="font-bold text-[#0F2B46] text-lg mt-1">{item.title}</h3>
+                      <p className="text-[#64748B] text-sm mt-1">{item.desc}</p>
+                    </div>
+                    <div className="w-4 h-4 bg-[#10B981] rounded-full border-4 border-white ring-2 ring-[#10B981]/30 flex-shrink-0" />
+                    <div className="flex-1 hidden md:block" />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

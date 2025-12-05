@@ -1,287 +1,302 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { 
-  ArrowRight,
-  Brain,
-  Database,
-  Shield,
-  Zap,
-  Link2,
+  Brain, 
+  Database, 
+  Shield, 
+  Zap, 
+  Link2, 
   Lock,
   BarChart3,
-  Cpu,
-  Globe,
   FileText,
   CheckCircle2,
-  Eye
+  Code,
+  Globe,
+  Cpu
 } from 'lucide-react';
 
 export default function Tecnologia() {
-  const aiFeatures = [
+  const features = [
     {
-      title: 'Análise de Jurisprudência',
-      description: 'Processamento contínuo de decisões judiciais de tribunais de todo o Brasil para calibrar valores e identificar tendências.'
+      icon: Brain,
+      title: 'Motor de IA Preditivo',
+      description: 'Algoritmos de machine learning treinados com dezenas de milhares de casos reais para sugerir a faixa de acordo com maior probabilidade de aceite.',
+      tech: ['TensorFlow', 'NLP', 'Análise Preditiva']
     },
     {
-      title: 'Machine Learning',
-      description: 'Modelos que aprendem com cada acordo fechado, melhorando continuamente as sugestões de valores.'
+      icon: Database,
+      title: 'Base Jurisprudencial',
+      description: 'Análise contínua de decisões judiciais em tempo real para calibrar valores e argumentos de negociação conforme o cenário legal atual.',
+      tech: ['Web Scraping', 'Data Mining', 'Jurimetria']
     },
     {
-      title: 'NLP Avançado',
-      description: 'Processamento de linguagem natural para extrair informações relevantes de documentos e comunicações.'
+      icon: Link2,
+      title: 'Integrações Nativas',
+      description: 'Conectado ao Consumidor.gov, CEJUSC, sistemas SAC e plataformas de ouvidoria das companhias através de APIs robustas.',
+      tech: ['REST APIs', 'Webhooks', 'OAuth 2.0']
     },
     {
-      title: 'Previsão de Aceite',
-      description: 'Cálculo da probabilidade de acordo com base no perfil do caso e histórico de negociações similares.'
+      icon: Lock,
+      title: 'Segurança & Auditoria',
+      description: 'Criptografia end-to-end, logs de auditoria completos e conformidade total com LGPD para proteção máxima de dados sensíveis.',
+      tech: ['AES-256', 'TLS 1.3', 'ISO 27001']
+    },
+    {
+      icon: Zap,
+      title: 'Automação Inteligente',
+      description: 'Workflows automatizados para triagem, notificações, geração de documentos e integração com sistemas financeiros.',
+      tech: ['RPA', 'Smart Contracts', 'Event-Driven']
+    },
+    {
+      icon: Shield,
+      title: 'Compliance Regulatório',
+      description: 'Alinhamento total com ANAC, CDC, CBA e Lei de Mediação (13.140/2015) com atualizações automáticas de normativas.',
+      tech: ['Compliance Engine', 'Audit Trail', 'RegTech']
     }
   ];
 
-  const integrations = [
-    { icon: Globe, name: 'Consumidor.gov.br', description: 'Sincronização automática de reclamações' },
-    { icon: FileText, name: 'CEJUSC', description: 'Integração com centros judiciários' },
-    { icon: Database, name: 'SAC/Ouvidoria', description: 'Conexão com sistemas internos' },
-    { icon: BarChart3, name: 'ERP Jurídico', description: 'Export de dados para gestão' },
-    { icon: Zap, name: 'APIs RESTful', description: 'Integrações customizadas' },
-    { icon: Link2, name: 'Webhooks', description: 'Notificações em tempo real' }
+  const aiCapabilities = [
+    {
+      title: 'Análise de Casos',
+      description: 'Classificação automática por tipo, urgência e valor estimado',
+      accuracy: '94%'
+    },
+    {
+      title: 'Previsão de Acordo',
+      description: 'Probabilidade de sucesso baseada em padrões históricos',
+      accuracy: '92%'
+    },
+    {
+      title: 'Sugestão de Valor',
+      description: 'Faixa ideal de acordo com base em jurisprudência',
+      accuracy: '89%'
+    },
+    {
+      title: 'Detecção de Fraudes',
+      description: 'Identificação de casos suspeitos ou fraudulentos',
+      accuracy: '96%'
+    }
   ];
 
-  const securityFeatures = [
-    { icon: Lock, title: 'Criptografia End-to-End', description: 'Todos os dados são criptografados em trânsito e em repouso' },
-    { icon: Eye, title: 'Logs de Auditoria', description: 'Rastreamento completo de todas as ações na plataforma' },
-    { icon: Shield, title: 'Conformidade LGPD', description: 'Políticas rigorosas de privacidade e proteção de dados' },
-    { icon: Cpu, title: 'Infraestrutura Segura', description: 'Servidores em data centers certificados no Brasil' }
+  const techStack = [
+    { category: 'Frontend', tech: 'React, TypeScript, TailwindCSS' },
+    { category: 'Backend', tech: 'Node.js, Python, FastAPI' },
+    { category: 'Database', tech: 'PostgreSQL, MongoDB, Redis' },
+    { category: 'AI/ML', tech: 'TensorFlow, scikit-learn, Hugging Face' },
+    { category: 'Cloud', tech: 'AWS, Docker, Kubernetes' },
+    { category: 'Security', tech: 'Auth0, Vault, CloudFlare' }
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-20">
-      {/* Hero */}
-      <section className="py-24 bg-gradient-to-br from-[#0F2B46] via-[#1E3A5F] to-[#0F2B46] relative overflow-hidden">
+    <div className="min-h-screen pt-20">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-[#0F2B46] via-[#1E3A5F] to-[#0F2B46] py-24 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#1E5A8A]/20 rounded-full blur-3xl" />
-          
-          {/* Grid Pattern */}
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDBoNjB2NjBIMHoiLz48cGF0aCBkPSJNMzAgMzBtLTEgMGExIDEgMCAxIDAgMiAwYTEgMSAwIDEgMCAtMiAwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9nPjwvc3ZnPg==')] opacity-40" />
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6Ii8+PHBhdGggZD0iTTIwIDIwbS0xIDBhMSAxIDAgMSAwIDIgMGExIDEgMCAxIDAgLTIgMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvZz48L3N2Zz4=')] opacity-30" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 mb-8">
-              <Cpu className="w-4 h-4 text-[#10B981]" />
-              <span className="text-white/80 text-sm font-medium">Tecnologia</span>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Inteligência Artificial
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#34D399]">
-                a Serviço da Conciliação
-              </span>
-            </h1>
-            <p className="text-xl text-white/70 leading-relaxed">
-              Uma plataforma robusta que combina IA, automação e segurança 
-              para transformar a gestão de conflitos aéreos.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* AI Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Motor de IA</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mt-4 mb-6">
-                Estimativa de Acordo Baseada em Dados
-              </h2>
-              <p className="text-[#64748B] text-lg mb-8">
-                Nosso algoritmo analisa milhares de variáveis para sugerir a faixa de valor 
-                com maior probabilidade de aceite, economizando tempo e recursos.
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Inteligência Artificial a Serviço da Justiça
+              </h1>
+              <p className="text-xl text-white/70 leading-relaxed">
+                Combinamos tecnologia de ponta com expertise jurídica para criar 
+                o ecossistema mais eficiente de resolução de conflitos aéreos
               </p>
-
-              <div className="space-y-6">
-                {aiFeatures.map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex gap-4"
-                  >
-                    <div className="w-8 h-8 bg-[#10B981]/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                      <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-[#0F2B46] mb-1">{feature.title}</h3>
-                      <p className="text-[#64748B] text-sm">{feature.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              {/* AI Dashboard Preview */}
-              <div className="bg-[#FAFBFC] rounded-3xl p-8 border border-gray-100">
-                <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-gradient-to-r from-[#10B981] to-[#059669] rounded-xl flex items-center justify-center">
-                      <Brain className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#0F2B46]">Análise de Caso</p>
-                      <p className="text-xs text-[#64748B]">Atraso de voo • GRU → MIA</p>
-                    </div>
-                  </div>
-
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
-                    <div className="h-full bg-gradient-to-r from-[#10B981] to-[#059669] rounded-full" style={{ width: '89%' }} />
-                  </div>
-                  <p className="text-xs text-[#64748B]">Confiança da análise: 89%</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-[#64748B] mb-1">Faixa Sugerida</p>
-                    <p className="text-lg font-bold text-[#0F2B46]">R$ 2.800 - R$ 3.500</p>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-[#64748B] mb-1">Prob. Aceite</p>
-                    <p className="text-lg font-bold text-[#10B981]">92%</p>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-[#64748B] mb-1">Casos Base</p>
-                    <p className="text-lg font-bold text-[#0F2B46]">1.247</p>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-[#64748B] mb-1">Tempo Est.</p>
-                    <p className="text-lg font-bold text-[#0F2B46]">2.3 dias</p>
-                  </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Integrations */}
-      <section className="py-24 bg-[#FAFBFC]">
+      {/* Main Features */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Integrações</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mt-4 mb-6">
-              Conectado ao Ecossistema
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+              Recursos Tecnológicos
             </h2>
             <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
-              Integrações nativas com plataformas públicas e privadas para centralizar a gestão de conflitos
+              Uma plataforma completa construída com as melhores práticas de engenharia de software
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {integrations.map((integration, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow group"
+                className="bg-[#FAFBFC] rounded-2xl p-8 border border-gray-100 hover:border-[#10B981] hover:shadow-lg transition-all group"
               >
-                <div className="w-12 h-12 bg-[#0F2B46] rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#10B981] transition-colors">
-                  <integration.icon className="w-6 h-6 text-white" />
+                <div className="w-14 h-14 bg-gradient-to-br from-[#10B981] to-[#059669] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <feature.icon className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="font-bold text-[#0F2B46] mb-2">{integration.name}</h3>
-                <p className="text-sm text-[#64748B]">{integration.description}</p>
+                <h3 className="text-xl font-bold text-[#0F2B46] mb-3">{feature.title}</h3>
+                <p className="text-[#64748B] mb-6 leading-relaxed">{feature.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {feature.tech.map((t, i) => (
+                    <span key={i} className="text-xs px-3 py-1 bg-[#10B981]/10 text-[#10B981] rounded-full font-medium">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Security */}
-      <section className="py-24 bg-gradient-to-br from-[#0F2B46] to-[#1E3A5F]">
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#10B981] font-semibold text-sm tracking-wider uppercase">Segurança</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-4 mb-6">
-              Proteção de Dados em Primeiro Lugar
+      {/* AI Capabilities */}
+      <section className="py-24 bg-gradient-to-br from-[#0F2B46] to-[#1E3A5F] relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Capacidades da Inteligência Artificial
             </h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto">
-              Infraestrutura robusta com os mais altos padrões de segurança e conformidade
+              Nosso motor de IA foi treinado com mais de 50.000 casos reais
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {securityFeatures.map((feature, index) => (
+            {aiCapabilities.map((capability, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-center"
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10"
               >
-                <div className="w-14 h-14 bg-[#10B981]/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-7 h-7 text-[#10B981]" />
+                <div className="flex items-center justify-between mb-4">
+                  <Brain className="w-8 h-8 text-[#10B981]" />
+                  <span className="text-2xl font-bold text-[#10B981]">{capability.accuracy}</span>
                 </div>
-                <h3 className="font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm text-white/60">{feature.description}</p>
+                <h3 className="font-bold text-white mb-2">{capability.title}</h3>
+                <p className="text-white/60 text-sm">{capability.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Tech Stack */}
+      <section className="py-24 bg-[#FAFBFC]">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+              Stack Tecnológico
+            </h2>
+            <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
+              Ferramentas e frameworks enterprise-grade para máxima performance e confiabilidade
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {techStack.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl p-6 border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <Code className="w-5 h-5 text-[#10B981]" />
+                  <h3 className="font-bold text-[#0F2B46]">{item.category}</h3>
+                </div>
+                <p className="text-[#64748B] text-sm">{item.tech}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Security & Compliance */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
-              Quer ver a tecnologia em ação?
-            </h2>
-            <p className="text-[#64748B] text-lg mb-8">
-              Agende uma demonstração técnica e conheça todos os recursos da plataforma.
-            </p>
-            <Link to={createPageUrl('Contato')}>
-              <Button size="lg" className="bg-[#10B981] hover:bg-[#059669] text-white px-8 py-6 text-lg rounded-xl group">
-                Agendar Demo Técnica
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </motion.div>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0F2B46] mb-6">
+                  Segurança e Conformidade
+                </h2>
+                <p className="text-[#64748B] text-lg mb-8 leading-relaxed">
+                  Proteção de dados sensíveis com os mais altos padrões de segurança da informação, 
+                  garantindo conformidade total com LGPD e regulamentações do setor.
+                </p>
+
+                <div className="space-y-4">
+                  {[
+                    'Criptografia AES-256 para dados em repouso',
+                    'TLS 1.3 para dados em trânsito',
+                    'Autenticação multi-fator (MFA)',
+                    'Logs de auditoria imutáveis',
+                    'Backup automático e disaster recovery',
+                    'Certificação ISO 27001 em processo'
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-[#10B981]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
+                      </div>
+                      <span className="text-[#64748B]">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-[#0F2B46] to-[#1E3A5F] rounded-3xl p-8 relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6Ii8+PHBhdGggZD0iTTIwIDIwbS0xIDBhMSAxIDAgMSAwIDIgMGExIDEgMCAxIDAgLTIgMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvZz48L3N2Zz4=')] opacity-30" />
+                
+                <div className="relative z-10">
+                  <Lock className="w-16 h-16 text-[#10B981] mb-6" />
+                  <h3 className="text-2xl font-bold text-white mb-4">Certificações</h3>
+                  
+                  <div className="space-y-4">
+                    {[
+                      { name: 'LGPD', desc: 'Lei Geral de Proteção de Dados' },
+                      { name: 'ISO 27001', desc: 'Segurança da Informação' },
+                      { name: 'SOC 2', desc: 'Service Organization Control' },
+                      { name: 'PCI DSS', desc: 'Payment Card Industry' }
+                    ].map((cert, index) => (
+                      <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                        <div className="flex items-center gap-3">
+                          <Shield className="w-5 h-5 text-[#10B981]" />
+                          <div>
+                            <p className="text-white font-semibold">{cert.name}</p>
+                            <p className="text-white/60 text-xs">{cert.desc}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

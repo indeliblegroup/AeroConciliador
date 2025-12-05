@@ -46,14 +46,14 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link to={createPageUrl('CompanhiasAereas')}>
-                <Button size="lg" className="bg-[#10B981] hover:bg-[#059669] text-white px-8 py-6 text-lg rounded-xl group w-full sm:w-auto">
+              <Link to={createPageUrl('CompanhiasAereas')} className="w-full sm:w-auto">
+                <Button size="lg" className="bg-[#10B981] hover:bg-[#059669] text-white px-8 py-6 text-lg rounded-xl group w-full">
                   Solicitar Demonstração
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to={createPageUrl('Passageiros')}>
-                <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-lg rounded-xl w-full sm:w-auto">
+              <Link to={createPageUrl('Passageiros')} className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-6 text-lg rounded-xl w-full">
                   Resolver Problema com Voo
                 </Button>
               </Link>

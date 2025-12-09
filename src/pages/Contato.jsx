@@ -14,6 +14,7 @@ import {
   User,
   CheckCircle2
 } from 'lucide-react';
+import { submitContactForm } from '@/services/api';
 
 export default function Contato() {
   const [formData, setFormData] = useState({
@@ -26,13 +27,16 @@ export default function Contato() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate form submission
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      await submitContactForm(formData);
+      setSubmitted(true);
       setFormData({
         name: '',
         email: '',
@@ -41,7 +45,12 @@ export default function Contato() {
         subject: 'demonstração',
         message: ''
       });
-    }, 3000);
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch (err) {
+      setError(err.message || 'Falha ao enviar mensagem');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -154,6 +163,11 @@ export default function Contato() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {error && (
+                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome Completo *</Label>
@@ -236,10 +250,11 @@ export default function Contato() {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full bg-[#10B981] hover:bg-[#059669] text-white rounded-xl py-6 text-lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#10B981] hover:bg-[#059669] text-white rounded-xl py-6 text-lg disabled:opacity-70"
                   >
                     <Send className="w-5 h-5 mr-2" />
-                    Enviar Mensagem
+                    {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
                   </Button>
                 </form>
               )}

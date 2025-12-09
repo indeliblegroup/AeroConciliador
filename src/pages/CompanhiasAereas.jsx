@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { 
   TrendingDown, 
   Clock, 
@@ -17,8 +19,50 @@ import {
   Target,
   DollarSign
 } from 'lucide-react';
+import { requestAirlineDemo } from '@/services/api';
 
 export default function CompanhiasAereas() {
+  const [demoForm, setDemoForm] = useState({
+    contactName: '',
+    contactEmail: '',
+    contactPhone: '',
+    airlineName: '',
+    position: '',
+    companySize: '',
+    currentCaseVolume: '',
+    mainChallenges: '',
+    preferredDate: ''
+  });
+  const [demoStatus, setDemoStatus] = useState(null);
+  const [demoError, setDemoError] = useState(null);
+  const [demoLoading, setDemoLoading] = useState(false);
+
+  const handleSubmitDemo = async (e) => {
+    e.preventDefault();
+    setDemoError(null);
+    setDemoStatus(null);
+    setDemoLoading(true);
+    try {
+      const res = await requestAirlineDemo(demoForm);
+      setDemoStatus(`Solicitação enviada. ID: ${res.demoId}`);
+      setDemoForm({
+        contactName: '',
+        contactEmail: '',
+        contactPhone: '',
+        airlineName: '',
+        position: '',
+        companySize: '',
+        currentCaseVolume: '',
+        mainChallenges: '',
+        preferredDate: ''
+      });
+    } catch (err) {
+      setDemoError(err.message || 'Não foi possível enviar a solicitação');
+    } finally {
+      setDemoLoading(false);
+    }
+  };
+
   const problems = [
     {
       icon: AlertCircle,
@@ -142,6 +186,106 @@ export default function CompanhiasAereas() {
                 </Link>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Formulário de demonstração */}
+      <section className="py-20 bg-[#FAFBFC]">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+            <div className="space-y-4">
+              <h3 className="text-3xl font-bold text-[#0F2B46]">Solicite uma demonstração executiva</h3>
+              <p className="text-[#64748B]">
+                Compartilhe seu contato e desafios atuais. Retornamos com agenda e estimativa de impacto.
+              </p>
+              {demoStatus && (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm">
+                  {demoStatus}
+                </div>
+              )}
+              {demoError && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">
+                  {demoError}
+                </div>
+              )}
+              <form onSubmit={handleSubmitDemo} className="space-y-3">
+                <div className="grid md:grid-cols-2 gap-3">
+                  <Input
+                    required
+                    placeholder="Nome"
+                    value={demoForm.contactName}
+                    onChange={(e) => setDemoForm({ ...demoForm, contactName: e.target.value })}
+                  />
+                  <Input
+                    required
+                    type="email"
+                    placeholder="E-mail"
+                    value={demoForm.contactEmail}
+                    onChange={(e) => setDemoForm({ ...demoForm, contactEmail: e.target.value })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <Input
+                    placeholder="Telefone"
+                    value={demoForm.contactPhone}
+                    onChange={(e) => setDemoForm({ ...demoForm, contactPhone: e.target.value })}
+                  />
+                  <Input
+                    required
+                    placeholder="Companhia aérea"
+                    value={demoForm.airlineName}
+                    onChange={(e) => setDemoForm({ ...demoForm, airlineName: e.target.value })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <Input
+                    required
+                    placeholder="Cargo"
+                    value={demoForm.position}
+                    onChange={(e) => setDemoForm({ ...demoForm, position: e.target.value })}
+                  />
+                  <Input
+                    placeholder="Tamanho da empresa"
+                    value={demoForm.companySize}
+                    onChange={(e) => setDemoForm({ ...demoForm, companySize: e.target.value })}
+                  />
+                </div>
+                <Input
+                  placeholder="Volume mensal de casos (estimado)"
+                  value={demoForm.currentCaseVolume}
+                  onChange={(e) => setDemoForm({ ...demoForm, currentCaseVolume: e.target.value })}
+                />
+                <Textarea
+                  rows={3}
+                  placeholder="Principais desafios"
+                  value={demoForm.mainChallenges}
+                  onChange={(e) => setDemoForm({ ...demoForm, mainChallenges: e.target.value })}
+                />
+                <Input
+                  type="date"
+                  placeholder="Data preferida"
+                  value={demoForm.preferredDate}
+                  onChange={(e) => setDemoForm({ ...demoForm, preferredDate: e.target.value })}
+                />
+                <Button type="submit" disabled={demoLoading} className="bg-[#10B981] hover:bg-[#059669] text-white">
+                  {demoLoading ? 'Enviando...' : 'Solicitar demonstração'}
+                </Button>
+              </form>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-xl font-semibold text-[#0F2B46]">O que entregar na demo?</h4>
+              <ul className="space-y-3 text-[#64748B]">
+                <li>• Visão do fluxo proposto para SAC/Ouvidoria e Consumidor.gov</li>
+                <li>• Simulação de ROI com base no volume mensal informado</li>
+                <li>• Recomendações de limites de acordo e escalonamentos</li>
+                <li>• Roteiro de integração técnica e de governança</li>
+              </ul>
+              <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
+                <p className="text-sm text-[#0F2B46] font-medium">SLA de resposta</p>
+                <p className="text-sm text-[#64748B]">Retorno em até 1 dia útil com proposta de agenda.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { 
   FileText, 
   Upload, 
@@ -12,8 +14,99 @@ import {
   Zap,
   AlertCircle
 } from 'lucide-react';
+import { registerPassengerCase, uploadDocument, analyzeCase } from '@/services/api';
 
 export default function Passageiros() {
+  const [caseForm, setCaseForm] = useState({
+    passengerName: '',
+    passengerEmail: '',
+    passengerPhone: '',
+    airline: '',
+    flightNumber: '',
+    flightDate: '',
+    issueType: 'atraso',
+    description: ''
+  });
+
+  const [docUploads, setDocUploads] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const [caseStatus, setCaseStatus] = useState(null);
+  const [caseError, setCaseError] = useState(null);
+
+  const [analysisInput, setAnalysisInput] = useState({
+    issueType: 'atraso',
+    airline: '',
+    description: '',
+    flightDelay: '',
+    bagageIssue: '',
+    cancellation: ''
+  });
+  const [analysis, setAnalysis] = useState(null);
+  const [analysisError, setAnalysisError] = useState(null);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
+
+  const handleUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const uploaded = [];
+      for (const file of files) {
+        const res = await uploadDocument(file);
+        uploaded.push(res.fileUrl);
+      }
+      setDocUploads((prev) => [...prev, ...uploaded]);
+    } catch (err) {
+      setUploadError(err.message || 'Falha ao enviar arquivo');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRegisterCase = async (e) => {
+    e.preventDefault();
+    setCaseError(null);
+    setCaseStatus(null);
+    try {
+      const payload = { ...caseForm, documentUrls: docUploads };
+      const res = await registerPassengerCase(payload);
+      setCaseStatus(`Caso registrado com sucesso. Número: ${res.caseNumber}`);
+      setCaseForm({
+        passengerName: '',
+        passengerEmail: '',
+        passengerPhone: '',
+        airline: '',
+        flightNumber: '',
+        flightDate: '',
+        issueType: 'atraso',
+        description: ''
+      });
+      setDocUploads([]);
+    } catch (err) {
+      setCaseError(err.message || 'Não foi possível registrar o caso');
+    }
+  };
+
+  const handleAnalyze = async (e) => {
+    e.preventDefault();
+    setAnalysisError(null);
+    setAnalysis(null);
+    setAnalysisLoading(true);
+    try {
+      const res = await analyzeCase({
+        ...analysisInput,
+        flightDelay: analysisInput.flightDelay ? Number(analysisInput.flightDelay) : undefined
+      });
+      setAnalysis(res.analysis);
+    } catch (err) {
+      setAnalysisError(err.message || 'Falha ao analisar caso');
+    } finally {
+      setAnalysisLoading(false);
+    }
+  };
+
   const steps = [
     {
       icon: FileText,
@@ -232,6 +325,183 @@ export default function Passageiros() {
             <Button size="lg" className="bg-[#10B981] hover:bg-[#059669] text-white px-10 py-6 text-lg rounded-xl">
               Registrar Meu Caso
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Registro de Caso */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold text-[#0F2B46]">Registre seu caso</h2>
+              <p className="text-[#64748B]">
+                Envie os detalhes e documentos do voo. Nossa equipe retorna com uma proposta em poucos dias.
+              </p>
+              {caseStatus && (
+                <div className="p-4 rounded-xl bg-green-50 border border-green-200 text-green-800 text-sm">
+                  {caseStatus}
+                </div>
+              )}
+              {caseError && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">
+                  {caseError}
+                </div>
+              )}
+              <form onSubmit={handleRegisterCase} className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    required
+                    placeholder="Nome completo"
+                    value={caseForm.passengerName}
+                    onChange={(e) => setCaseForm({ ...caseForm, passengerName: e.target.value })}
+                  />
+                  <Input
+                    type="email"
+                    required
+                    placeholder="E-mail"
+                    value={caseForm.passengerEmail}
+                    onChange={(e) => setCaseForm({ ...caseForm, passengerEmail: e.target.value })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    placeholder="Telefone"
+                    value={caseForm.passengerPhone}
+                    onChange={(e) => setCaseForm({ ...caseForm, passengerPhone: e.target.value })}
+                  />
+                  <Input
+                    required
+                    placeholder="Companhia aérea"
+                    value={caseForm.airline}
+                    onChange={(e) => setCaseForm({ ...caseForm, airline: e.target.value })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    placeholder="Número do voo"
+                    value={caseForm.flightNumber}
+                    onChange={(e) => setCaseForm({ ...caseForm, flightNumber: e.target.value })}
+                  />
+                  <Input
+                    type="date"
+                    value={caseForm.flightDate}
+                    onChange={(e) => setCaseForm({ ...caseForm, flightDate: e.target.value })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <select
+                    className="w-full px-3 py-3 rounded-lg border border-gray-200"
+                    value={caseForm.issueType}
+                    onChange={(e) => setCaseForm({ ...caseForm, issueType: e.target.value })}
+                  >
+                    <option value="atraso">Atraso</option>
+                    <option value="cancelamento">Cancelamento</option>
+                    <option value="bagagem">Bagagem</option>
+                    <option value="overbooking">Overbooking</option>
+                    <option value="downgrade">Downgrade</option>
+                  </select>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm text-[#0F2B46] font-medium">Documentos (PDF/JPG/PNG/DOC)</label>
+                    <input
+                      type="file"
+                      multiple
+                      onChange={handleUpload}
+                      className="w-full text-sm"
+                      accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                    />
+                    {uploading && <span className="text-xs text-[#0F2B46]">Enviando...</span>}
+                    {uploadError && <span className="text-xs text-red-600">{uploadError}</span>}
+                    {docUploads.length > 0 && (
+                      <span className="text-xs text-green-700">{docUploads.length} arquivo(s) anexado(s)</span>
+                    )}
+                  </div>
+                </div>
+                <Textarea
+                  required
+                  rows={4}
+                  placeholder="Descreva o ocorrido"
+                  value={caseForm.description}
+                  onChange={(e) => setCaseForm({ ...caseForm, description: e.target.value })}
+                />
+                <Button type="submit" className="bg-[#10B981] hover:bg-[#059669] text-white">
+                  Registrar caso
+                </Button>
+              </form>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-[#0F2B46]">Análise rápida</h3>
+              <p className="text-[#64748B]">Obtenha uma prévia automática de urgência e valor estimado.</p>
+              {analysisError && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-800">
+                  {analysisError}
+                </div>
+              )}
+              {analysis && (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm space-y-2">
+                  <div><strong>Urgência:</strong> {analysis.urgency}</div>
+                  <div><strong>Probabilidade de acordo:</strong> {analysis.settlementProbability}%</div>
+                  <div><strong>Valor sugerido:</strong> R$ {analysis.suggestedValue}</div>
+                  <div><strong>Fundamento:</strong> {analysis.legalBasis}</div>
+                  <div><strong>Prazo estimado:</strong> {analysis.estimatedDays} dias</div>
+                  <div><strong>Pontos de negociação:</strong>
+                    <ul className="list-disc ml-5">
+                      {analysis.negotiationPoints?.map((p, idx) => <li key={idx}>{p}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              )}
+              <form onSubmit={handleAnalyze} className="space-y-3">
+                <div className="grid md:grid-cols-2 gap-3">
+                  <select
+                    className="w-full px-3 py-3 rounded-lg border border-gray-200"
+                    value={analysisInput.issueType}
+                    onChange={(e) => setAnalysisInput({ ...analysisInput, issueType: e.target.value })}
+                  >
+                    <option value="atraso">Atraso</option>
+                    <option value="cancelamento">Cancelamento</option>
+                    <option value="bagagem">Bagagem</option>
+                    <option value="overbooking">Overbooking</option>
+                  </select>
+                  <Input
+                    placeholder="Companhia aérea (opcional)"
+                    value={analysisInput.airline}
+                    onChange={(e) => setAnalysisInput({ ...analysisInput, airline: e.target.value })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <Input
+                    type="number"
+                    min="0"
+                    step="0.5"
+                    placeholder="Atraso em horas (opcional)"
+                    value={analysisInput.flightDelay}
+                    onChange={(e) => setAnalysisInput({ ...analysisInput, flightDelay: e.target.value })}
+                  />
+                  <Input
+                    placeholder="Problema de bagagem (opcional)"
+                    value={analysisInput.bagageIssue}
+                    onChange={(e) => setAnalysisInput({ ...analysisInput, bagageIssue: e.target.value })}
+                  />
+                </div>
+                <Input
+                  placeholder="Cancelamento (motivo, se houver)"
+                  value={analysisInput.cancellation}
+                  onChange={(e) => setAnalysisInput({ ...analysisInput, cancellation: e.target.value })}
+                />
+                <Textarea
+                  required
+                  rows={3}
+                  placeholder="Descreva brevemente o caso"
+                  value={analysisInput.description}
+                  onChange={(e) => setAnalysisInput({ ...analysisInput, description: e.target.value })}
+                />
+                <Button type="submit" disabled={analysisLoading} className="bg-[#0F2B46] hover:bg-[#0b2036] text-white">
+                  {analysisLoading ? 'Analisando...' : 'Analisar caso'}
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
       </section>

@@ -1,0 +1,13 @@
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "restartPolicyType": "ON_FAILURE",
+    "healthcheckPath": "/api/contact",
+    "healthcheckTimeout": 100,
+    "numReplicas": 1,
+    "startCommand": "node server/index.js"
+  }
+}
+

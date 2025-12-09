@@ -267,6 +267,10 @@ const validateRequired = (payload, required) => {
 
 const nowDateTime = () => new Date().toISOString().slice(0, 19).replace('T', ' ');
 
+app.get('/health', (_req, res) => {
+  res.json({ ok: true, db: db.kind, time: new Date().toISOString() });
+});
+
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, company, phone, subject, message } = req.body || {};

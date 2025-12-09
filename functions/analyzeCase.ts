@@ -20,7 +20,6 @@ Deno.serve(async (req) => {
             );
         }
 
-        // Use AI to analyze the case and suggest settlement value
         const analysisPrompt = `
 Você é um especialista em direito aeronáutico brasileiro e conciliação de conflitos aéreos.
 

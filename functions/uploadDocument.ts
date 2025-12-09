@@ -4,7 +4,6 @@ Deno.serve(async (req) => {
     try {
         const base44 = createClientFromRequest(req);
         
-        // Parse multipart form data
         const formData = await req.formData();
         const file = formData.get('file');
         const caseId = formData.get('caseId');
@@ -16,8 +15,7 @@ Deno.serve(async (req) => {
             );
         }
 
-        // Validate file size (max 10MB)
-        const maxSize = 10 * 1024 * 1024; // 10MB
+        const maxSize = 10 * 1024 * 1024;
         if (file.size > maxSize) {
             return Response.json(
                 { error: 'Arquivo muito grande. Tamanho máximo: 10MB' },
@@ -25,7 +23,6 @@ Deno.serve(async (req) => {
             );
         }
 
-        // Validate file type
         const allowedTypes = [
             'application/pdf',
             'image/jpeg',
@@ -42,7 +39,6 @@ Deno.serve(async (req) => {
             );
         }
 
-        // Upload file to Base44 storage
         const { file_url } = await base44.integrations.Core.UploadFile({
             file: file
         });

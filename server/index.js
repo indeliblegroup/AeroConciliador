@@ -234,6 +234,8 @@ const createMysqlClient = async () => {
     },
     updatePassengerStatus: async (id, status) => {
       await pool.query('UPDATE passenger_cases SET status = ? WHERE id = ?', [status, id]);
+      const [rows] = await pool.query('SELECT * FROM passenger_cases WHERE id = ?', [id]);
+      return rows[0] || null;
     },
   };
 };
@@ -500,8 +502,11 @@ app.post('/api/admin/cases/:id/status', async (req, res) => {
     if (!status) {
       return res.status(400).json({ error: 'Status é obrigatório' });
     }
-    await db.updatePassengerStatus(req.params.id, status);
-    res.json({ success: true });
+    const updated = await db.updatePassengerStatus(req.params.id, status);
+    if (!updated) {
+      return res.status(404).json({ error: 'Caso não encontrado' });
+    }
+    res.json({ success: true, case: updated });
   } catch (error) {
     console.error('admin update case status error', error);
     res.status(error.status || 500).json({ error: error.message || 'Erro interno' });

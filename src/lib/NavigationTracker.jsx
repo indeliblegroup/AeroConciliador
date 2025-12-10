@@ -19,10 +19,10 @@ export default function NavigationTracker() {
     useEffect(() => {
         const pathname = location.pathname;
         const pageKeys = Object.keys(Pages);
-        const pathSegment = pathname.replace(/^\//, '').split('/')[0];
+            const pathSegment = pathname.replace(/^\//, '').split('/')[0];
         pathname === '/' || pathname === '' ? mainPageKey : pageKeys.find(
-            key => key.toLowerCase() === pathSegment.toLowerCase()
-        );
+                key => key.toLowerCase() === pathSegment.toLowerCase()
+            );
         // could hook analytics here if needed
     }, [location, Pages, mainPageKey]);
 

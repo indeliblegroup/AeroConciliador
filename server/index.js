@@ -5,6 +5,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 
 const PORT = process.env.PORT || 4000;
 const CORS_ORIGIN = process.env.CORS_ORIGIN?.split(',').map((o) => o.trim()).filter(Boolean) || ['*'];
@@ -19,6 +20,13 @@ const DB_PASSWORD = process.env.DB_PASSWORD || process.env.MYSQLPASSWORD;
 const DB_NAME = process.env.DB_NAME || process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE;
 const DB_SSL = process.env.DB_SSL ?? 'true';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
+const SMTP_HOST = process.env.SMTP_HOST;
+const SMTP_PORT = process.env.SMTP_PORT;
+const SMTP_USER = process.env.SMTP_USER;
+const SMTP_PASS = process.env.SMTP_PASS;
+const SMTP_SECURE = process.env.SMTP_SECURE === 'false' ? false : true;
+const SMTP_FROM = process.env.SMTP_FROM || 'info@indelible-group.com';
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'info@indelible-group.com';
 
 // Ensure upload directory exists
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -306,6 +314,37 @@ const requireAdmin = (req) => {
   }
 };
 
+let mailerPromise = null;
+const getMailer = async () => {
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) return null;
+  if (!mailerPromise) {
+    mailerPromise = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT),
+      secure: SMTP_SECURE,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
+    });
+  }
+  return mailerPromise;
+};
+
+const sendNotification = async (subject, html) => {
+  try {
+    const transporter = await getMailer();
+    if (!transporter) return;
+    await transporter.sendMail({
+      from: SMTP_FROM,
+      to: NOTIFY_EMAIL,
+      subject,
+      html,
+    });
+  } catch (err) {
+    console.error('email error', err);
+  }
+};
+
+const formatJson = (obj) => `<pre style="font-family:monospace;font-size:12px;">${JSON.stringify(obj, null, 2)}</pre>`;
+
 app.get('/health', (_req, res) => {
   res.json({ ok: true, db: db.kind, time: new Date().toISOString() });
 });
@@ -326,6 +365,10 @@ app.post('/api/contact', async (req, res) => {
       created_at: nowDateTime(),
     };
     await db.insertContact(record);
+    await sendNotification(
+      'Novo contato - AeroConciliador',
+      `<p>Dados do contato:</p>${formatJson(record)}`
+    );
     res.json({ success: true, message: 'Mensagem enviada com sucesso', id: record.id });
   } catch (error) {
     console.error('contact error', error);
@@ -364,6 +407,10 @@ app.post('/api/airline-demo', async (req, res) => {
       created_at: nowDateTime(),
     };
     await db.insertDemo(record);
+    await sendNotification(
+      'Nova solicitação de demonstração - AeroConciliador',
+      `<p>Dados da demo:</p>${formatJson(record)}`
+    );
     res.json({ success: true, demoId: record.id, message: 'Solicitação de demonstração enviada com sucesso' });
   } catch (error) {
     console.error('airline demo error', error);
@@ -404,6 +451,10 @@ app.post('/api/passenger-case', async (req, res) => {
       created_at: nowDateTime(),
     };
     await db.insertPassenger(record);
+    await sendNotification(
+      'Novo caso de passageiro - AeroConciliador',
+      `<p>Dados do caso:</p>${formatJson(record)}`
+    );
     res.json({ success: true, caseNumber });
   } catch (error) {
     console.error('passenger case error', error);

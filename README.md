@@ -13,8 +13,8 @@ UPLOAD_DIR=./uploads
 CORS_ORIGIN=http://localhost:5173
 PUBLIC_URL=http://localhost:4000
 VITE_API_BASE=http://localhost:4000
-# DB: sqlite (default) ou mysql
-DB_CLIENT=sqlite
+# DB: mysql (default) ou sqlite
+DB_CLIENT=mysql
 # Para MySQL (exemplo Railway)
 DB_URL=mysql://user:pass@host:port/dbname
 # ou definir manualmente:
@@ -24,6 +24,14 @@ DB_URL=mysql://user:pass@host:port/dbname
 # DB_PASSWORD=
 # DB_NAME=
 # DB_SSL=true
+# Email (opcional)
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASS=
+SMTP_SECURE=true
+SMTP_FROM=info@indelible-group.com
+NOTIFY_EMAIL=info@indelible-group.com
 ```
 
 ## Rodar local
@@ -68,6 +76,7 @@ Uploads ficam em `UPLOAD_DIR` e são servidos em `/uploads/...`. O SQLite é cri
 - `VITE_API_BASE=https://<backend-staging-ou-prod>`
 - Demais builds: `npm run build` (Vite).
 - `vercel.json` inclui rewrite SPA; se 404 em rotas diretas, redeploy.
+ - Se for usar SMTP, configure as variáveis acima (emails enviados para `NOTIFY_EMAIL`).
 
 ## Docker local (equivalente Railway)
 ```bash

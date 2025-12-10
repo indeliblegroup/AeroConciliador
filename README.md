@@ -67,6 +67,7 @@ Uploads ficam em `UPLOAD_DIR` e são servidos em `/uploads/...`. O SQLite é cri
 ## Frontend (Vercel)
 - `VITE_API_BASE=https://<backend-staging-ou-prod>`
 - Demais builds: `npm run build` (Vite).
+- `vercel.json` inclui rewrite SPA; se 404 em rotas diretas, redeploy.
 
 ## Docker local (equivalente Railway)
 ```bash

@@ -9,7 +9,7 @@ import crypto from 'crypto';
 const PORT = process.env.PORT || 4000;
 const CORS_ORIGIN = process.env.CORS_ORIGIN?.split(',').map((o) => o.trim()).filter(Boolean) || ['*'];
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
-const DB_CLIENT = (process.env.DB_CLIENT || 'sqlite').toLowerCase();
+const DB_CLIENT = (process.env.DB_CLIENT || 'mysql').toLowerCase();
 const DB_PATH = process.env.DB_PATH || path.join(process.cwd(), 'data.db');
 const DB_URL = process.env.DB_URL || process.env.MYSQL_URL || process.env.MYSQL_PUBLIC_URL;
 const DB_HOST = process.env.DB_HOST || process.env.MYSQLHOST;
@@ -92,7 +92,10 @@ const createSqliteClient = async () => {
     fetchContacts: () => sqlite.prepare('SELECT * FROM contact_submissions ORDER BY created_at DESC').all(),
     fetchDemos: () => sqlite.prepare('SELECT * FROM demo_requests ORDER BY created_at DESC').all(),
     fetchPassengers: () => sqlite.prepare('SELECT * FROM passenger_cases ORDER BY created_at DESC').all(),
-    updatePassengerStatus: (id, status) => sqlite.prepare('UPDATE passenger_cases SET status = @status WHERE id = @id').run({ id, status }),
+    updatePassengerStatus: (id, status) => {
+      sqlite.prepare('UPDATE passenger_cases SET status = @status WHERE id = @id').run({ id, status });
+      return sqlite.prepare('SELECT * FROM passenger_cases WHERE id = @id').get({ id });
+    },
   };
 };
 

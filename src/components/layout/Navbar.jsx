@@ -33,7 +33,7 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
         ? 'bg-white/95 backdrop-blur-md shadow-sm' 
-        : 'bg-transparent'
+        : 'bg-[#0F2B46]/85 backdrop-blur-md'
     }`}>
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
@@ -60,7 +60,7 @@ export default function Navbar() {
                 className={`text-sm font-medium transition-colors ${
                   isScrolled 
                     ? isActive(link.href) ? 'text-[#10B981]' : 'text-[#64748B] hover:text-[#0F2B46]'
-                    : isActive(link.href) ? 'text-[#10B981]' : 'text-white/80 hover:text-white'
+                    : isActive(link.href) ? 'text-[#10B981]' : 'text-white hover:text-white'
                 }`}
               >
                 {link.name}
@@ -75,7 +75,7 @@ export default function Navbar() {
                 className={`rounded-xl px-6 transition-all ${
                   isScrolled 
                     ? 'bg-[#10B981] hover:bg-[#059669] text-white' 
-                    : 'bg-white text-[#0F2B46] hover:bg-white/90'
+                    : 'bg-[#10B981] hover:bg-[#059669] text-white'
                 }`}
               >
                 Fale Conosco

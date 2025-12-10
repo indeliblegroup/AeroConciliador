@@ -6,17 +6,8 @@ import { Menu, X, ChevronDown, Plane } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navLinks = [
     { name: 'Para Companhias', href: 'CompanhiasAereas' },
@@ -30,23 +21,15 @@ export default function Navbar() {
   const isActive = (href) => location.pathname === `/${href}`;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-sm' 
-        : 'bg-[#0F2B46]/85 backdrop-blur-md'
-    }`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to={createPageUrl('Home')} className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-              isScrolled ? 'bg-[#0F2B46]' : 'bg-white/10'
-            }`}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-colors bg-[#0F2B46]">
               <Plane className="w-5 h-5 text-white" style={{ transform: 'rotate(-45deg)' }} />
             </div>
-            <span className={`text-xl font-bold transition-colors ${
-              isScrolled ? 'text-[#0F2B46]' : 'text-white'
-            }`}>
+            <span className="text-xl font-bold transition-colors text-[#0F2B46]">
               AeroConciliador
             </span>
           </Link>
@@ -58,9 +41,7 @@ export default function Navbar() {
                 key={link.href}
                 to={createPageUrl(link.href)}
                 className={`text-sm font-medium transition-colors ${
-                  isScrolled 
-                    ? isActive(link.href) ? 'text-[#10B981]' : 'text-[#64748B] hover:text-[#0F2B46]'
-                    : isActive(link.href) ? 'text-[#10B981]' : 'text-white hover:text-white'
+                  isActive(link.href) ? 'text-[#10B981]' : 'text-[#0F2B46] hover:text-[#0B1E31]'
                 }`}
               >
                 {link.name}
@@ -72,11 +53,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-4">
             <Link to={createPageUrl('Contato')}>
               <Button 
-                className={`rounded-xl px-6 transition-all ${
-                  isScrolled 
-                    ? 'bg-[#10B981] hover:bg-[#059669] text-white' 
-                    : 'bg-[#10B981] hover:bg-[#059669] text-white'
-                }`}
+                className="rounded-xl px-6 transition-all bg-[#10B981] hover:bg-[#059669] text-white"
               >
                 Fale Conosco
               </Button>
@@ -89,9 +66,9 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <X className={isScrolled ? 'text-[#0F2B46]' : 'text-white'} />
+              <X className="text-[#0F2B46]" />
             ) : (
-              <Menu className={isScrolled ? 'text-[#0F2B46]' : 'text-white'} />
+              <Menu className="text-[#0F2B46]" />
             )}
           </button>
         </div>

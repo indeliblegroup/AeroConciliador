@@ -18,6 +18,7 @@ const DB_USER = process.env.DB_USER || process.env.MYSQLUSER;
 const DB_PASSWORD = process.env.DB_PASSWORD || process.env.MYSQLPASSWORD;
 const DB_NAME = process.env.DB_NAME || process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE;
 const DB_SSL = process.env.DB_SSL ?? 'true';
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
 
 // Ensure upload directory exists
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -88,6 +89,10 @@ const createSqliteClient = async () => {
     insertContact: (record) => insertContact.run(record),
     insertDemo: (record) => insertDemo.run(record),
     insertPassenger: (record) => insertPassengerCase.run(record),
+    fetchContacts: () => sqlite.prepare('SELECT * FROM contact_submissions ORDER BY created_at DESC').all(),
+    fetchDemos: () => sqlite.prepare('SELECT * FROM demo_requests ORDER BY created_at DESC').all(),
+    fetchPassengers: () => sqlite.prepare('SELECT * FROM passenger_cases ORDER BY created_at DESC').all(),
+    updatePassengerStatus: (id, status) => sqlite.prepare('UPDATE passenger_cases SET status = @status WHERE id = @id').run({ id, status }),
   };
 };
 
@@ -215,6 +220,21 @@ const createMysqlClient = async () => {
         ]
       );
     },
+    fetchContacts: async () => {
+      const [rows] = await pool.query('SELECT * FROM contact_submissions ORDER BY created_at DESC');
+      return rows;
+    },
+    fetchDemos: async () => {
+      const [rows] = await pool.query('SELECT * FROM demo_requests ORDER BY created_at DESC');
+      return rows;
+    },
+    fetchPassengers: async () => {
+      const [rows] = await pool.query('SELECT * FROM passenger_cases ORDER BY created_at DESC');
+      return rows;
+    },
+    updatePassengerStatus: async (id, status) => {
+      await pool.query('UPDATE passenger_cases SET status = ? WHERE id = ?', [status, id]);
+    },
   };
 };
 
@@ -266,6 +286,20 @@ const validateRequired = (payload, required) => {
 };
 
 const nowDateTime = () => new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+const requireAdmin = (req) => {
+  if (!ADMIN_TOKEN) {
+    const err = new Error('ADMIN_TOKEN não configurado');
+    err.status = 501;
+    throw err;
+  }
+  const token = req.headers['x-admin-token'];
+  if (token !== ADMIN_TOKEN) {
+    const err = new Error('Não autorizado');
+    err.status = 401;
+    throw err;
+  }
+};
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true, db: db.kind, time: new Date().toISOString() });
@@ -421,6 +455,55 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
     });
   } catch (error) {
     console.error('upload error', error);
+    res.status(error.status || 500).json({ error: error.message || 'Erro interno' });
+  }
+});
+
+// Admin endpoints (read-only + status update)
+app.get('/api/admin/contacts', async (req, res) => {
+  try {
+    requireAdmin(req);
+    const data = await db.fetchContacts();
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('admin contacts error', error);
+    res.status(error.status || 500).json({ error: error.message || 'Erro interno' });
+  }
+});
+
+app.get('/api/admin/demos', async (req, res) => {
+  try {
+    requireAdmin(req);
+    const data = await db.fetchDemos();
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('admin demos error', error);
+    res.status(error.status || 500).json({ error: error.message || 'Erro interno' });
+  }
+});
+
+app.get('/api/admin/cases', async (req, res) => {
+  try {
+    requireAdmin(req);
+    const data = await db.fetchPassengers();
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('admin cases error', error);
+    res.status(error.status || 500).json({ error: error.message || 'Erro interno' });
+  }
+});
+
+app.patch('/api/admin/cases/:id/status', async (req, res) => {
+  try {
+    requireAdmin(req);
+    const { status } = req.body || {};
+    if (!status) {
+      return res.status(400).json({ error: 'Status é obrigatório' });
+    }
+    await db.updatePassengerStatus(req.params.id, status);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('admin update case status error', error);
     res.status(error.status || 500).json({ error: error.message || 'Erro interno' });
   }
 });

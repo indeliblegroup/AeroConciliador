@@ -180,7 +180,10 @@ export default function CompanhiasAereas() {
                   </Button>
                 </Link>
                 <Link to={createPageUrl('ComoFunciona')}>
-                  <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-lg rounded-xl">
+                  <Button
+                    size="lg"
+                    className="px-8 py-6 text-lg rounded-xl bg-white text-[#0F2B46] hover:bg-white/90 shadow-sm"
+                  >
                     Ver Como Funciona
                   </Button>
                 </Link>

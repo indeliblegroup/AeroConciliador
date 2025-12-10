@@ -493,7 +493,7 @@ app.get('/api/admin/cases', async (req, res) => {
   }
 });
 
-app.patch('/api/admin/cases/:id/status', async (req, res) => {
+app.put('/api/admin/cases/:id/status', async (req, res) => {
   try {
     requireAdmin(req);
     const { status } = req.body || {};

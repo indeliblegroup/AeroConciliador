@@ -1,11 +1,14 @@
 # Build args (override as needed)
 ARG NODE_VERSION=20
+ARG CACHE_BUST=2025-12-10-01
 
 FROM node:${NODE_VERSION}-slim AS base
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=8080
+
+RUN echo "cache bust $CACHE_BUST"
 
 # Install deps
 COPY package.json package-lock.json* ./

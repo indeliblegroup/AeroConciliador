@@ -57,6 +57,7 @@
     "input-otp": "^1.4.2",
     "jspdf": "^2.5.2",
     "nodemailer": "^6.9.15",
+    "dotenv": "^16.4.7",
     "lodash": "^4.17.21",
     "lucide-react": "^0.475.0",
     "moment": "^2.30.1",

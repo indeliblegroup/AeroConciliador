@@ -1,5 +1,4 @@
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
-const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT; // opcional (ex.: Formspree)
 
 const handleResponse = async (res) => {
   const data = await res.json().catch(() => ({}));
@@ -10,21 +9,12 @@ const handleResponse = async (res) => {
   return data;
 };
 
-export const submitContactForm = (payload) => {
-  // Se existir endpoint externo (ex.: Formspree), usa ele; senão, backend padrão
-  if (FORM_ENDPOINT) {
-    return fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).then(handleResponse);
-  }
-  return fetch(`${API_BASE}/api/contact`, {
+export const submitContactForm = (payload) =>
+  fetch(`${API_BASE}/api/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   }).then(handleResponse);
-};
 
 export const requestAirlineDemo = (payload) =>
   fetch(`${API_BASE}/api/airline-demo`, {
@@ -57,6 +47,4 @@ export const uploadDocument = (file, extras = {}) => {
     body: formData,
   }).then(handleResponse);
 };
-
-
 

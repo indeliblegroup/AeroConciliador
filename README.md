@@ -13,6 +13,8 @@ UPLOAD_DIR=./uploads
 CORS_ORIGIN=http://localhost:5173
 PUBLIC_URL=http://localhost:4000
 VITE_API_BASE=http://localhost:4000
+# Opcional: endpoint externo de formulário (ex. Formspree)
+VITE_FORM_ENDPOINT=
 # DB: mysql (default) ou sqlite
 DB_CLIENT=mysql
 # Para MySQL (exemplo Railway)
